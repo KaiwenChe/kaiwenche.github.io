@@ -1,0 +1,61 @@
+baseURL = 'https://kaiwenche.github.io/'
+languageCode = 'en-us'
+title = 'Flandre S.'
+theme = 'PaperMod'
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[params]
+defaultTheme = 'light'
+ShowShareButtons = true
+ShowReadingTime = true
+ShowBreadCrumbs = true
+ShowPostNavLinks = true
+ShowCodeCopyButtons = true
+ShowToc = true
+TocOpen = false
+
+[params.profileMode]
+enabled = true
+title = 'Flandre S.'
+subtitle = 'Agentic AI explorer'
+imageUrl = '/images/avatar.jpg'
+imageWidth = 200
+imageHeight = 200
+
+[[params.profileMode.buttons]]
+name = 'Posts'
+url = '/posts/'
+
+[[params.profileMode.buttons]]
+name = 'Tags'
+url = '/tags/'
+
+[[params.socialIcons]]
+name = 'github'
+url = 'https://github.com/kaiwenche'
+
+[[params.socialIcons]]
+name = 'x'
+url = 'https://x.com/F1an_dr'
+
+[[params.socialIcons]]
+name = 'linkedin'
+url = 'https://www.linkedin.com/in/kaiwen-che-1b1351269/'
+
+[[params.socialIcons]]
+name = 'email'
+url = 'mailto:kaiwenche2026@gmail.com'
+
+[[menu.main]]
+identifier = 'posts'
+name = 'Posts'
+url = '/posts/'
+weight = 10
+
+[[menu.main]]
+identifier = 'tags'
+name = 'Tags'
+url = '/tags/'
+weight = 20

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Flandre S.</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on Flandre S.</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Mar 2026 00:35:57 -0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Can We Teach Agents Editorial Taste with RLVR?</title>
+      <link>http://localhost:1313/posts/rlvr-resume-agent/</link>
+      <pubDate>Tue, 31 Mar 2026 00:35:57 -0700</pubDate>
+      <guid>http://localhost:1313/posts/rlvr-resume-agent/</guid>
+      <description>&lt;h2 id=&#34;intro&#34;&gt;Intro&lt;/h2&gt;
+&lt;p&gt;RLVR works where correctness is cheap to verify: math, coding, formal reasoning. The frontier is moving toward agentic tasks with more complex success criteria, but the reward signals still mostly resolve to something clear-cut. The unsolved problem is what I&amp;rsquo;d call &lt;em&gt;semi-verifiable&lt;/em&gt; domains. You can mechanically check some outcomes, but the core quality dimension doesn&amp;rsquo;t reduce to a binary. Whether a piece of writing is actually &lt;em&gt;good&lt;/em&gt; isn&amp;rsquo;t something you can write a unit test for.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

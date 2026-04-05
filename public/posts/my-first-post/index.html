@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="dark">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Can We Teach Agents Editorial Taste with RLVR? | Flandre S.</title>
+<meta name="keywords" content="">
+<meta name="description" content="Intro
+RLVR works where correctness is cheap to verify: math, coding, formal reasoning. The frontier is moving toward agentic tasks with more complex success criteria, but the reward signals still mostly resolve to something clear-cut. The unsolved problem is what I&rsquo;d call semi-verifiable domains. You can mechanically check some outcomes, but the core quality dimension doesn&rsquo;t reduce to a binary. Whether a piece of writing is actually good isn&rsquo;t something you can write a unit test for.">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/my-first-post/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.199042e659bc7245f5609d333d6c044eb554a0640849bb874e1dff8eb0f57209.css" integrity="sha256-GZBC5lm8ckX1YJ0zPWwETrVUoGQISbuHTh3/jrD1cgk=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/my-first-post/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Flandre S. (Alt + H)">Flandre S.</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      Can We Teach Agents Editorial Taste with RLVR?
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2026-03-31 00:35:57 -0700 PDT'>March 31, 2026</span>&nbsp;·&nbsp;<span>21 min</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#intro" aria-label="Intro">Intro</a></li>
+                <li>
+                    <a href="#task-setup" aria-label="Task Setup">Task Setup</a><ul>
+                        
+                <li>
+                    <a href="#data-synthetic-resumes-with-planted-weaknesses" aria-label="Data: synthetic resumes with planted weaknesses">Data: synthetic resumes with planted weaknesses</a></li>
+                <li>
+                    <a href="#environment-simplified-file-system-agent" aria-label="Environment: simplified file-system agent">Environment: simplified file-system agent</a></li></ul>
+                </li>
+                <li>
+                    <a href="#reward-design" aria-label="Reward Design">Reward Design</a><ul>
+                        
+                <li>
+                    <a href="#tool-syntax-verifiable-per-turn" aria-label="Tool Syntax (Verifiable, Per-Turn)">Tool Syntax (Verifiable, Per-Turn)</a></li>
+                <li>
+                    <a href="#layout-constraint-verifiable-binary" aria-label="Layout Constraint (Verifiable, Binary)">Layout Constraint (Verifiable, Binary)</a></li>
+                <li>
+                    <a href="#content-quality-llm-judge-terminal" aria-label="Content Quality (LLM Judge, Terminal)">Content Quality (LLM Judge, Terminal)</a><ul>
+                        
+                <li>
+                    <a href="#no-edit-shortcut" aria-label="No-Edit Shortcut">No-Edit Shortcut</a></li></ul>
+                </li>
+                <li>
+                    <a href="#putting-it-together" aria-label="Putting It Together">Putting It Together</a></li></ul>
+                </li>
+                <li>
+                    <a href="#training-dynamics" aria-label="Training Dynamics">Training Dynamics</a><ul>
+                        
+                <li>
+                    <a href="#training-stack" aria-label="Training Stack">Training Stack</a></li>
+                <li>
+                    <a href="#overview" aria-label="Overview">Overview</a></li>
+                <li>
+                    <a href="#the-handoff-tool-mastery-unlocks-content-learning" aria-label="The Handoff: Tool Mastery Unlocks Content Learning">The Handoff: Tool Mastery Unlocks Content Learning</a></li>
+                <li>
+                    <a href="#content-quality-j-curves" aria-label="Content Quality J-Curves">Content Quality J-Curves</a></li></ul>
+                </li>
+                <li>
+                    <a href="#evaluation" aria-label="Evaluation">Evaluation</a><ul>
+                        
+                <li>
+                    <a href="#decomposing-the-improvement" aria-label="Decomposing the Improvement">Decomposing the Improvement</a></li>
+                <li>
+                    <a href="#content-quality-defensive-beats-constructive" aria-label="Content Quality: Defensive Beats Constructive">Content Quality: Defensive Beats Constructive</a></li>
+                <li>
+                    <a href="#scaling-vs-training" aria-label="Scaling vs. Training">Scaling vs. Training</a></li></ul>
+                </li>
+                <li>
+                    <a href="#whats-still-lacking-and-where-we-can-go-from-here" aria-label="What&rsquo;s Still Lacking and Where We Can Go From Here">What&rsquo;s Still Lacking and Where We Can Go From Here</a></li>
+                <li>
+                    <a href="#closing-note" aria-label="Closing Note">Closing Note</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><h2 id="intro">Intro<a hidden class="anchor" aria-hidden="true" href="#intro">#</a></h2>
+<p>RLVR works where correctness is cheap to verify: math, coding, formal reasoning. The frontier is moving toward agentic tasks with more complex success criteria, but the reward signals still mostly resolve to something clear-cut. The unsolved problem is what I&rsquo;d call <em>semi-verifiable</em> domains. You can mechanically check some outcomes, but the core quality dimension doesn&rsquo;t reduce to a binary. Whether a piece of writing is actually <em>good</em> isn&rsquo;t something you can write a unit test for.</p>
+<p>Optimizing for content quality isn&rsquo;t new; DPO targeted this for style and alignment in the pre-agentic setting. But agents reframe it as a planning problem: the model makes sequential edits through tool calls, and quality emerges from the full trajectory. SFT teaches tool syntax and domain style, but doesn&rsquo;t optimize over which actions to take, in what order, and requires curated expert examples. GRPO fits this problem shape best, and the community has just begun to explore rubric-based RLVR in agentic settings.</p>
+<p>This is exactly where agent deployment is accelerating fastest. The file-system agent architectures behind coding assistants like Cursor, Claude Code, and Codex are already generalizing into document editing, structured file management, and professional writing. Anthropic&rsquo;s Cowork is an early example: the same agent that edits code starts editing spreadsheets and slide decks. Yet a clear end-to-end training recipe hasn&rsquo;t been demonstrated.</p>
+<p>To understand what this kind of recipe requires, I chose resume revision as a representative domain. It&rsquo;s the kind of task that Cowork and similar agents at other frontier labs could handle every day, with real domain knowledge, format constraints, subjective quality, and file-system-based editing all in play.</p>
+<p>This post walks through my attempt at end-to-end RLVR for this kind of task. I trained a Qwen3-14B resume revision agent with a GRPO-based algorithm, using an LLM judge for the content quality feedback. The core finding is that there&rsquo;s real signal in this setup: the model learns tool precision, develops editorial judgment, and improves meaningfully over base. The interesting part is how it gets there. Tool mastery comes fast while content quality learns slow, some quality dimensions improve while others flatline, and domain-specific constraints shape the learning in unexpected yet inevitable ways.</p>
+<p><strong>Code, environment, and training configs: <a href="link">github.com/your-username/repo-name</a></strong></p>
+<h2 id="task-setup">Task Setup<a hidden class="anchor" aria-hidden="true" href="#task-setup">#</a></h2>
+<h3 id="data-synthetic-resumes-with-planted-weaknesses">Data: synthetic resumes with planted weaknesses<a hidden class="anchor" aria-hidden="true" href="#data-synthetic-resumes-with-planted-weaknesses">#</a></h3>
+<p>Real resumes paired with real job descriptions would be ideal, but getting them at scale means scraping, cleaning, and navigating privacy and copyright problems that aren&rsquo;t worth the distraction for a proof of concept. So the dataset is fully synthetic — 200 resume-JD pairs generated by Gemini 3 Pro, the model known for its strong world knowledge, split 160/40 train/eval.</p>
+<p>Each data point starts as a randomly sampled persona: role, seniority, industry vertical, tech stack, education, company history. The diversity matrix is wide enough (19 roles × 6 seniority levels × 39 verticals, with role-specific stacks and realistic career progressions) that the model can&rsquo;t memorize its way through. The persona seeds both a resume and a matched job description that the candidate would plausibly apply to.</p>
+<p>The key design choice is weakness injection. Each resume is assigned one of six weakness types that represent common failure modes a revision agent should learn to fix:</p>
+<ul>
+<li><strong><code>vague_bullets</code></strong> — generic phrasing that lacks specificity</li>
+<li><strong><code>no_metrics</code></strong> — real accomplishments with zero quantification</li>
+<li><strong><code>too_long</code></strong> — good content that exceeds an established page limit</li>
+<li><strong><code>wrong_emphasis</code></strong> — relevant experience buried or undersold for the target role</li>
+<li><strong><code>weak_verbs</code></strong> — passive constructions that diminish impact</li>
+<li><strong><code>formatting_inconsistent</code></strong> — mixed date formats, bullet styles, header levels</li>
+</ul>
+<p>The generation prompt mixes roughly 60% weak and 40% strong bullets within each resume, so the documents feel like real people being inconsistent rather than uniformly bad. The agent needs to learn to identify <em>which</em> bullets to fix, not apply a blanket rewrite.</p>
+<p>The weakness metadata doesn&rsquo;t appear in the agent&rsquo;s prompt — it sees only the JD and resume and has to figure out what to improve on its own. But the metadata reaches the judge rubric as ground truth context, letting it assess whether the agent actually addressed the specific weakness present. The agent learns to diagnose without labels; the reward signal is informed by them.</p>
+<h3 id="environment-simplified-file-system-agent">Environment: simplified file-system agent<a hidden class="anchor" aria-hidden="true" href="#environment-simplified-file-system-agent">#</a></h3>
+<p>The task is a deliberate simplification of how real file-system agents work. A coding agent like Claude Code or Codex would first locate the relevant file, read it into context, then start editing. I skip the retrieval phase — the agent receives its system instruction, the target JD, and the resume in Markdown at rollout start, as if it had already opened the file. This collapses the problem to the part I actually wanted to train: multi-turn agentic editing with tool use, layout constraints, and content quality judgment.</p>
+<p>The page constraint is a 55-line limit with auto-wrapping at 165 characters per line — my proxy for a standard-formatted one-page resume. Our agent gets a 10-turn budget and three tools, limited to one tool call per turn:</p>
+<ul>
+<li><strong><code>str_replace(old, new, count)</code></strong> — the primary editing tool, modeled after the search-and-replace pattern in coding agents like Claude Code and Cursor. The agent passes an <code>old</code> string to locate in the resume and a <code>new</code> string to replace it with. On success, it returns a unified diff of what changed plus current layout stats (line count, max line length). On failure — <code>old</code> not found, or multiple ambiguous matches — it returns an error describing what went wrong.</li>
+<li><strong><code>review()</code></strong> — shows the full current resume with constraint status: line count versus the 55-line limit, and an overflow delimiter if over.</li>
+<li><strong><code>submit()</code></strong> — finalizes the revision and ends the session for grading.</li>
+</ul>
+<p>Every tool response includes a meta-line with turns remaining and cumulative edit count (e.g. <code>turns left: 7/10 | edits: 3</code>), giving the agent situational awareness for planning.</p>
+<p>The original <code>str_replace</code> implementation included a 9-stage fuzzy matching cascade (inspired by <a href="https://github.com/anomalyco/opencode">OpenCode</a>) that can tolerate whitespace and indentation differences, but I disabled it for the actual training and evaluation. The replacer runs in strict exact-match mode. Fuzzy matching would forgive sloppy tool arguments, which sounds helpful but undermines the learning signal — I wanted the model to learn precise string formatting as a skill in itself.</p>
+<p>The one-tool-per-turn constraint is also deliberate. It makes each turn&rsquo;s action discrete and unambiguous, which simplifies reward attribution and mirrors a natural editing rhythm: make a change, see the result, decide what&rsquo;s next.</p>
+<h2 id="reward-design">Reward Design<a hidden class="anchor" aria-hidden="true" href="#reward-design">#</a></h2>
+<p>Three rubrics add up to one scalar reward, each targeting a different aspect of an agentic writing task. Tool syntax gives per-turn signal on every tool call. Content quality only fires once, at rollout end, when an LLM judge compares the original and revised resumes. Layout is a binary gate. The agent has to navigate all of this within a 10-turn budget.</p>
+<h3 id="tool-syntax-verifiable-per-turn">Tool Syntax (Verifiable, Per-Turn)<a hidden class="anchor" aria-hidden="true" href="#tool-syntax-verifiable-per-turn">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Success</th>
+          <th>Failure</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>str_replace</code></td>
+          <td>+0.25</td>
+          <td>-0.25</td>
+          <td>Per-call, flat</td>
+      </tr>
+      <tr>
+          <td><code>review</code></td>
+          <td>+1.0</td>
+          <td>—</td>
+          <td>One-time bonus</td>
+      </tr>
+      <tr>
+          <td><code>submit</code></td>
+          <td>+1.0</td>
+          <td>—</td>
+          <td>One-time bonus</td>
+      </tr>
+      <tr>
+          <td>No <code>submit</code> by rollout end</td>
+          <td>—</td>
+          <td>-1.0</td>
+          <td>Terminal penalty</td>
+      </tr>
+  </tbody>
+</table>
+<p><code>str_replace</code> is the skill I most wanted the agent to master: the core editing primitive, the same pattern coding agents use to add sections, refactor, and delete dead code. Flat per-call scoring creates a direct incentive to keep exploring edits across the turn budget, while applying equal pressure against sloppy attempts that don&rsquo;t match.</p>
+<p><code>review</code> and <code>submit</code> bonuses are capped at one to prevent farming. The terminal -1.0 for missing <code>submit</code> enforces workflow discipline — the work might be excellent, but if it&rsquo;s never finalized, it doesn&rsquo;t count.</p>
+<h3 id="layout-constraint-verifiable-binary">Layout Constraint (Verifiable, Binary)<a hidden class="anchor" aria-hidden="true" href="#layout-constraint-verifiable-binary">#</a></h3>
+<p>Resume ≤ 55 lines: +1.0. Over: -1.0. Every junior and mid-level candidate working on their resume knows this one: keep it to one page, no exceptions. LLMs are notoriously prone to bloating content, and this is my direct counterweight. Real page limits don&rsquo;t have partial credit.</p>
+<h3 id="content-quality-llm-judge-terminal">Content Quality (LLM Judge, Terminal)<a hidden class="anchor" aria-hidden="true" href="#content-quality-llm-judge-terminal">#</a></h3>
+<p>When the agent has made at least one successful edit, an LLM judge (Gemini 3 Flash) evaluates the revision against the original using Pydantic structured output. The judge sees the JD, both resume versions, and the example&rsquo;s weakness metadata as context.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Worse</th>
+          <th>Same</th>
+          <th>Better</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hallucination</td>
+          <td>-1.0</td>
+          <td>—</td>
+          <td>+1.0</td>
+      </tr>
+      <tr>
+          <td>Clarity</td>
+          <td>-0.25</td>
+          <td>0.0</td>
+          <td>+0.25</td>
+      </tr>
+      <tr>
+          <td>Quantification</td>
+          <td>-0.25</td>
+          <td>0.0</td>
+          <td>+0.25</td>
+      </tr>
+      <tr>
+          <td>JD Alignment</td>
+          <td>-0.25</td>
+          <td>0.0</td>
+          <td>+0.25</td>
+      </tr>
+      <tr>
+          <td>Action Verbs</td>
+          <td>-0.25</td>
+          <td>0.0</td>
+          <td>+0.25</td>
+      </tr>
+      <tr>
+          <td>Overall Preference</td>
+          <td>-1.0</td>
+          <td>0.0</td>
+          <td>+1.0</td>
+      </tr>
+  </tbody>
+</table>
+<p>Hallucination carries the largest single swing, deliberately. Resume editing has a specific failure mode: the temptation to embellish. An agent that adds &ldquo;increased revenue by 40%&rdquo; when the original says nothing about revenue has produced an impressive-looking but fabricated document. The heavy penalty makes this the dominant content signal. A conservative factual edit should beat an ambitious rewrite that invents.</p>
+<p>The four quality metrics map to the revision priorities in the agent&rsquo;s system prompt. Small magnitudes, because each is a refinement signal, not a dominant driver; together they contribute up to ±1.0 total, but no single metric can take over. The judge evaluates them independently via structured output fields, giving the model a decomposed signal about which dimensions it&rsquo;s improving or degrading.</p>
+<p>Overall preference captures everything the four metrics might miss: formatting coherence, readability, professional tone, the gestalt. The judge prompt asks it to consider &ldquo;all factors and the vibe.&rdquo; This is my catch-all for quality dimensions I didn&rsquo;t explicitly decompose, and a safeguard against quirky reward-hacking on individual metrics.</p>
+<h4 id="no-edit-shortcut">No-Edit Shortcut<a hidden class="anchor" aria-hidden="true" href="#no-edit-shortcut">#</a></h4>
+<p>If the agent makes zero successful edits (resume unchanged), I skip the judge entirely and assign penalties directly. No point comparing identical documents, and the compute savings matter at 48 rollouts per step.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Score</th>
+          <th>Rationale</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Hallucination</td>
+          <td>-1.0</td>
+          <td>Penalizes disengagement</td>
+      </tr>
+      <tr>
+          <td>Weakness-targeted metric</td>
+          <td>-0.25</td>
+          <td>Targets whichever quality dimension the example was designed to test</td>
+      </tr>
+      <tr>
+          <td>Other metrics</td>
+          <td>0.0</td>
+          <td>No penalty for unrelated dimensions</td>
+      </tr>
+      <tr>
+          <td>Preference</td>
+          <td>0.0</td>
+          <td>No comparison possible</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="putting-it-together">Putting It Together<a hidden class="anchor" aria-hidden="true" href="#putting-it-together">#</a></h3>
+<p><strong>R = tool_syntax + layout + content_quality</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Tool Syntax</th>
+          <th>Layout</th>
+          <th>Content Quality</th>
+          <th><strong>Total</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Best case</strong></td>
+          <td>+4.0</td>
+          <td>+1.0</td>
+          <td>+3.0</td>
+          <td><strong>+8.0</strong></td>
+      </tr>
+      <tr>
+          <td><strong>Worst case</strong></td>
+          <td>-3.5</td>
+          <td>-1.0</td>
+          <td>-3.0</td>
+          <td><strong>-7.0</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>The worst case requires at least one successful edit (to trigger the full judge penalty), since zero successful edits hit the no-edit shortcut instead (content = -1.25, total = -5.75). For tracking, the raw reward is normalized to 0–100: <code>100 × (R + 7) / 15</code>.</p>
+<p>The rubrics reinforce in places and conflict in others. The agent has to learn not just how to edit or how to write good resumes, but how to allocate its turn budget across competing objectives (more edits vs. page limit, fabrication check vs. better narratives).</p>
+<h2 id="training-dynamics">Training Dynamics<a hidden class="anchor" aria-hidden="true" href="#training-dynamics">#</a></h2>
+<h3 id="training-stack">Training Stack<a hidden class="anchor" aria-hidden="true" href="#training-stack">#</a></h3>
+<p>I picked <a href="https://github.com/PrimeIntellect-ai/verifiers">Verifiers</a> for the environment — it provides a <code>StatefulToolEnv</code> abstraction where you define tools, state, and rubrics, and the framework handles rollout loops, tool dispatch, and reward aggregation. <a href="https://github.com/PrimeIntellect-ai/prime-rl">PRIME-RL</a> handles the RL training. Both are from Prime Intellect.</p>
+<p>For the algorithm, I used PRIME-RL&rsquo;s default <a href="https://docs.primeintellect.ai/prime-rl/async#loss-objective">AIPO</a> — an asynchronous variant of GRPO that drops the entropy and KL loss terms. The entire pipeline runs on a single 4×H200 node: one GPU for vLLM inference (Hermes tool-call parsing), three GPUs for FSDP2 training (full finetune, BF16, activation checkpointing every layer), and the CPU orchestrator managing batched rollouts (group size 16, batch size 48). 160 steps, lr 5e-6, temperature 0.7.</p>
+<h3 id="overview">Overview<a hidden class="anchor" aria-hidden="true" href="#overview">#</a></h3>
+<p><img alt="Training Dashboard" loading="lazy" src="training_dashboard.png"></p>
+<p>Over 160 steps, mean reward climbed from 2.2 to 6.1 (normalized score: 61 → 87 out of 100). The all-time high hit 7.15 at step 156 — a single batch where the model averaged 94.3 on the normalized scale. Reward variance dropped by 64% over the run, from a standard deviation of 3.2 down to 1.2. The model went from erratic to consistent.</p>
+<p>But the aggregate trajectory hides what I think is the most interesting finding. Break the total reward gain (+3.92) into its rubric components: tool syntax contributed +2.96 — 75% of the entire improvement. Content quality contributed +0.94, about 24%. Layout was negligible. Three-quarters of the learning was the model figuring out how to use <code>str_replace</code> without failing and remembering to call <code>submit</code>. The content quality dimension — the part that requires editorial judgment, the part that makes this task interesting — was a comparatively small slice of the reward signal. The training dynamics reveal <em>why</em> it improved late and slowly, and the answer turns out to be structural.</p>
+<h3 id="the-handoff-tool-mastery-unlocks-content-learning">The Handoff: Tool Mastery Unlocks Content Learning<a hidden class="anchor" aria-hidden="true" href="#the-handoff-tool-mastery-unlocks-content-learning">#</a></h3>
+<p><img alt="Emergent Hand-off" loading="lazy" src="headline_handoff.png"></p>
+<p>The most noticeable pattern in the run is an emergent phase transition, a &ldquo;curriculum&rdquo; between tool learning and content learning.</p>
+<p><strong>Steps 0–20</strong> were dominated by tool mechanics. Edit failures dropped from 2.76 to under 1.0 by step 8; submit rate hit near-perfect by step 9. The model learned <code>str_replace</code> formatting and workflow discipline within about 20 steps. The cost was real: content quality <em>regressed</em> from 1.85 to 0.65, and overall reward briefly cratered to 0.22 at step 10 — the all-time low.</p>
+<p><strong>Steps 20–84</strong> saw tools plateau and content pick up. The model settled into a stable rhythm of a few edits, a couple reviews, and a submit per rollout. Content quality rose from 0.65 to 1.91 by step 84. Hallucination recovered to ~0.82 average. But preference stayed slightly negative through most of this phase (average -0.08) — the model was making <em>correct</em> edits but not yet <em>good</em> ones by the judge&rsquo;s taste. A brief disruption around step 88 marked the transition to the final phase.</p>
+<p><strong>Steps 95–160</strong> unlocked synergy — the strongest phase of the run. Edit success <em>rate</em> climbed from 83% in phase 2 to 93% (95% in the final steps), while successful edits more than doubled from ~2 to ~4.5 per rollout. The model was attempting more edits and landing a higher fraction of them. Review calls dropped from ~2 to exactly 1.0 — the optimal &ldquo;review once, then submit&rdquo; pattern. Preference turned decisively positive (average 0.54).</p>
+<p>The rate increase is evidence of a feedback loop: better content judgment → higher-confidence edit attempts → more successes → more tool syntax reward → more budget for further edits. The model had to learn <em>how</em> to edit before it could learn <em>what</em> to edit — and once both skills were in place, they compounded.</p>
+<p><img alt="Transient Policy Collapse" loading="lazy" src="crash_headline.png"></p>
+<p><strong>Steps 88–91: a brief collapse.</strong> Right at the boundary between the content-pickup phase and synergy, the training hit a transient policy collapse. Nearly every metric dropped to a synchronized low. This looks more like a confidence collapse than a skill regression, possibly the point where the policy was transitioning between two behavioral regimes and briefly fell between them. The post-collapse phase produced the highest rewards in the entire run — a pattern sometimes seen in RL where a collapse forces exploration of better policy regions.</p>
+<h3 id="content-quality-j-curves">Content Quality J-Curves<a hidden class="anchor" aria-hidden="true" href="#content-quality-j-curves">#</a></h3>
+<p><img alt="J-Curve" loading="lazy" src="jcurve_gallery.png"></p>
+<p>Zooming into individual content metrics, a typical J-curve emerged. The aggregate content quality score dipped 71% from its smoothed baseline around step 27 and didn&rsquo;t surpass it until step 72. By the end of training it had nearly doubled (1.23 → 2.18). But the aggregate masks real variation underneath.</p>
+<p>The four quality metrics all trough in a tight band around steps 24–27 — right when tool learning is most aggressive — but their recovery timelines diverge. Action verbs and JD alignment bounced back around mid-run. Clarity dipped deepest (166% below baseline) and didn&rsquo;t surpass it until step 101, still climbing at the end. Preference was the last to recover (step 103) — it&rsquo;s the judge&rsquo;s holistic impression, and it only improved once both tool competence and content quality were in place.</p>
+<p>The two exceptions sit at opposite ends. Hallucination (non-fabrication reward) barely exhibits a J-curve on the smoothed trend: it dipped only 26% and recovered almost immediately. The raw values were more volatile, but the trend line held. The ±1.0 penalty was the largest single swing in the content rubric, and the base model&rsquo;s factual discipline survived the early destabilization largely intact, even as stylistic metrics took significant hits.</p>
+<p>On the other end, quantification J-curves down and never comes back. It started near zero (0.04), dipped 173%, and ended the run at 0.01 — worse than where it started. This is a particularly domain-pertinent result, as adding quantified metrics to vague achievements (&ldquo;managed a team&rdquo; → &ldquo;managed a team of 12, reducing attrition by 30%&rdquo;) requires either inventing plausible numbers (which the hallucination penalty correctly discourages) or grounding in context the resume rarely provides. The model correctly learned not to try rather than risk hallucinating — the one dimension where the rubric&rsquo;s internal tensions produced a stable equilibrium at &ldquo;don&rsquo;t attempt.&rdquo;</p>
+<h2 id="evaluation">Evaluation<a hidden class="anchor" aria-hidden="true" href="#evaluation">#</a></h2>
+<p><img alt="Reward Distribution: Base vs. Trained Model" loading="lazy" src="reward_distribution_base_vs_trained.png"></p>
+<p>Evaluation uses the same setup as training: 40 held-out examples, 16 rollouts each, 640 total per model, same Gemini 3 Flash judge. The base model&rsquo;s rewards spread across nearly the full [-7, +8] range, with 21% of rollouts scoring below zero. The trained model compresses into a spike at 7.0–7.5, almost nothing below zero (0.8%). Mean reward rose from 2.73 to 5.41 (+98%), and the trained model won 38 of 40 held-out examples. A secondary cluster around 2.0–2.5 in the trained distribution marks layout failures — I&rsquo;ll come back to why.</p>
+<h3 id="decomposing-the-improvement">Decomposing the Improvement<a hidden class="anchor" aria-hidden="true" href="#decomposing-the-improvement">#</a></h3>
+<p><img alt="Reward Component Breakdown by Model" loading="lazy" src="reward_components.png"></p>
+<p>The +2.68 reward gap confirms the training pattern on held-out data: tool syntax contributed +2.34 (87%), content quality +0.41 (15%), layout slightly negative. The single biggest behavioral change is submit rate: 33% → 100%. Two-thirds of base model rollouts never called <code>submit</code> — forfeiting content quality reward on potentially solid work. This alone accounts for more than half the tool syntax gap.</p>
+<p>The trained model lands the same number of successful edits (4.86 vs. 4.70) while cutting failures by 92% (2.80 → 0.22) and generating 38% fewer words — editing cleaner, not more. Per-example consistency tightened 2.6× (reward σ: 1.89 → 0.73), which matters as much as the mean if you&rsquo;re deploying on real resumes.</p>
+<p><img alt="Efficiency: Edit Accuracy vs Verbosity" loading="lazy" src="efficiency_scatter.png"></p>
+<p><strong>A typical failure mode.</strong> To ground these numbers, here&rsquo;s a base model rollout on a <code>too_long</code> resume — the weakness type where base performance is worst (mean reward −1.18).</p>
+<table>
+  <thead>
+      <tr>
+          <th>Turn</th>
+          <th>Action</th>
+          <th>Result</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td><code>str_replace</code> — rename degree field</td>
+          <td>✗ multiple matches</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td><code>str_replace</code> — same edit, narrower context</td>
+          <td>✓</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td><code>review</code></td>
+          <td>74/55 lines — over by 19</td>
+      </tr>
+      <tr>
+          <td>4–10</td>
+          <td><code>str_replace</code> — trim coursework list (×7, same target each time)</td>
+          <td>✗✗✗✗✗✗✗ text not found</td>
+      </tr>
+      <tr>
+          <td>—</td>
+          <td><em>turn limit — never submitted</em></td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<p>The root cause is a formatting subtlety: the coursework line wraps at the 165-character limit, splitting &ldquo;User Experience / Design&rdquo; across two lines in the document. The model searches for &ldquo;User Experience Design&rdquo; as a continuous string — exact match fails. Its chain-of-thought correctly diagnoses the mismatch each time, yet it retries the identical approach seven consecutive turns without adjusting strategy, and runs out of budget without submitting.</p>
+<p>This retry-loop-to-timeout pattern is the mechanism behind the base model&rsquo;s 33% submit rate. The trained model never exhibits it: across 640 evaluation rollouts, zero show this kind of spiral. When an edit fails, it adjusts or moves on.</p>
+<h3 id="content-quality-defensive-beats-constructive">Content Quality: Defensive Beats Constructive<a hidden class="anchor" aria-hidden="true" href="#content-quality-defensive-beats-constructive">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Sub-metric</th>
+          <th>Base</th>
+          <th>Trained</th>
+          <th>Change</th>
+          <th>p</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Content quality (total)</td>
+          <td>1.37</td>
+          <td>1.78</td>
+          <td>+30%</td>
+          <td>0.012</td>
+      </tr>
+      <tr>
+          <td>Hallucination</td>
+          <td>0.36</td>
+          <td>0.87</td>
+          <td>+139%</td>
+          <td>&lt;0.001</td>
+      </tr>
+      <tr>
+          <td>Action verbs</td>
+          <td>0.14</td>
+          <td>0.22</td>
+          <td>+56%</td>
+          <td>&lt;0.001</td>
+      </tr>
+      <tr>
+          <td>JD alignment</td>
+          <td>0.14</td>
+          <td>0.15</td>
+          <td>+3%</td>
+          <td>0.774</td>
+      </tr>
+      <tr>
+          <td>Clarity</td>
+          <td>0.13</td>
+          <td>0.09</td>
+          <td>−35%</td>
+          <td>0.012</td>
+      </tr>
+      <tr>
+          <td>Quantification</td>
+          <td>0.04</td>
+          <td>0.00</td>
+          <td>−98%</td>
+          <td>&lt;0.001</td>
+      </tr>
+      <tr>
+          <td>Preference</td>
+          <td>0.55</td>
+          <td>0.46</td>
+          <td>−16%</td>
+          <td>0.281</td>
+      </tr>
+  </tbody>
+</table>
+<p>Content quality improved overall (+30%, p=0.012), but the per-metric breakdown says more about what the model actually learned.</p>
+<p>The two significant improvements — hallucination avoidance (+139%) and action verbs (+56%) — share a trait: they had the clearest reward gradients. Hallucination carried the largest single swing in the rubric (±1.0), and &ldquo;stronger verbs&rdquo; is a relatively unambiguous dimension for the judge to evaluate. The model learned what the reward signal made easiest to learn.</p>
+<p>The regressions landed where the training J-curves predicted. Quantification dropped to effectively zero — the same equilibrium where the model learned not to attempt it rather than risk fabricating numbers. Clarity regressed 35%. Preference and JD alignment didn&rsquo;t move significantly.</p>
+<p><strong>The layout trap.</strong> Layout pass rate dropped from 77% to 73% — the one dimension where training made things worse. More successful edits add content, content adds lines, lines push past 55. The reward math makes this rational — a successful <code>str_replace</code> is worth +0.25 every time, while layout failure costs −1.0 once. This explains the secondary cluster in the trained distribution.</p>
+<p>The broader pattern is worth naming. <em>Defensive</em> quality — not fabricating, not failing at tool calls, not forgetting to submit — learned fast and reliably. <em>Constructive</em> quality — making the resume genuinely better by the judge&rsquo;s taste — learned slowly and incompletely. The rubric&rsquo;s strongest signals were all about avoiding harm rather than creating value. Reward magnitude shaped the priority.</p>
+<h3 id="scaling-vs-training">Scaling vs. Training<a hidden class="anchor" aria-hidden="true" href="#scaling-vs-training">#</a></h3>
+<p><img alt="Reward Distributions: Qwen3-14B (Trained) vs Baselines" loading="lazy" src="reward_distributions_combined.png"></p>
+<p>To contextualize the result, I evaluated two additional models: Qwen3-32B — does doubling parameters within the same family buy what RL training bought? — and GPT-5 Mini, to anchor where a trained 14B lands relative to frontier. GPT-5 Mini occasionally issued parallel tool calls despite the one-per-turn instruction; I filtered those rollouts (575/640 remaining) with negligible effect on the comparison.</p>
+<p>The trained 14B matches GPT-5 Mini on total reward (5.41 vs. 5.30) and outperforms it on 5 of 6 weakness types. Untrained 32B lands at 3.07, barely above the 14B base at 2.73. Fourteen billion extra parameters bought a 12% reward improvement. RL training on the smaller base bought 98%.</p>
+<p><img alt="Performance by Resume Weakness Type" loading="lazy" src="per_weakness_comparison.png"></p>
+<p>But matching on total reward doesn&rsquo;t mean matching everywhere — the reward <em>composition</em> diverges. The trained model dominates on tool syntax (3.16 vs. GPT-5 Mini&rsquo;s 1.94), reflecting near-perfect workflow discipline against GPT-5 Mini&rsquo;s ~32% submit rate. GPT-5 Mini leads on content quality (2.48 vs. 1.78) and layout compliance (0.87 vs. 0.47) — stronger editorial judgment and better length control out of the box. They arrive at the same total through fundamentally different paths: trained discipline versus raw capability.</p>
+<p>Qwen3-32B offers its own lesson. Despite the extra capacity, it posted the <em>worst</em> hallucination score of any model tested (0.18 mean, vs. 0.36 for base 14B). A larger base model was <em>more</em> prone to fabrication in this domain, not less — more capacity to generate plausible-sounding details that happen to be invented. RL training is what corrects this: the trained 14B&rsquo;s hallucination score (0.87) exceeds even GPT-5 Mini&rsquo;s (0.80).</p>
+<p>The content quality and layout gap to GPT-5 Mini marks where further training would push. Tool mastery is solved. What remains is the semi-verifiable core — and the eval suggests the model learned to be reliable before it learned to be good, with reward magnitude determining the priority.</p>
+<h2 id="whats-still-lacking-and-where-we-can-go-from-here">What&rsquo;s Still Lacking and Where We Can Go From Here<a hidden class="anchor" aria-hidden="true" href="#whats-still-lacking-and-where-we-can-go-from-here">#</a></h2>
+<p>A pattern runs through these results: the model optimizes what&rsquo;s loudest first, and what&rsquo;s quieter may never get its turn.</p>
+<p><strong>Layout was the one dimension training made worse.</strong> Pass rate dropped from 77% to 73%, average line count crept up (49.1 → 50.8). The per-turn math favoring editing over restraint was covered in Evaluation; the deeper issue is data coverage. Only <code>too_long</code> resumes (one-sixth of the training set) actually exceed the 55-line limit; the rest are comfortably compliant. The model collects the +1.0 layout bonus for free on five-sixths of examples, and on the sixth, the signal drowns under louder tool and content rewards before shortening strategies can develop. Binary gates don&rsquo;t teach strategy when they only bind on a data minority. A continuous reward scaling with distance from the limit, with enough amplitude to compete, would give the model something to optimize on every example.</p>
+<p><strong>The hallucination penalty correctly suppressed constructive editing, and that tension is structural.</strong> Quantification dropped to effectively zero over training (0.038 → 0.001) and stayed there in eval. The model learned the right strategy under the reward structure: don&rsquo;t attempt to add metrics, because &ldquo;reduced attrition by 30%&rdquo; when the original says nothing about attrition is fabrication by definition. The ±1.0 hallucination swing dominates the ±0.25 quantification reward, so the rational move is to leave vague bullets vague.</p>
+<p>Not a training failure. It&rsquo;s a stable equilibrium that happens to produce an undesirable outcome, specific to domains where the input document doubles as the factual ground truth. In marketing copy, the model is expected to generate new claims; in resume revision, anything not grounded in the original is fabrication. That asymmetry makes constructive RLVR structurally harder here than it might first appear.</p>
+<p>The iteration I&rsquo;d try next is expanding the information environment rather than relaxing the penalty. Give the agent retrievable supplementary context: portfolio documents, project descriptions, performance reviews. That reframes the problem from &ldquo;don&rsquo;t fabricate&rdquo; to &ldquo;find and use evidence,&rdquo; which is a richer learning target and closer to how a human editor actually works with a client.</p>
+<p><strong>Content quality improved overall (+30%), but the scalar reward compresses multidimensional quality into one gradient.</strong> Consider two rollouts that both score +2.0 on the content rubric. One gets there through safe edits the judge liked overall: hallucination +1.0, preference +1.0, all four sub-metrics at zero. The other systematically improves every targeted dimension but leaves the judge unmoved on the whole: hallucination +1.0, clarity +0.25, quantification +0.25, JD alignment +0.25, action verbs +0.25, preference 0. Conservative and holistic versus targeted and systematic. The policy gradient sees the same scalar.</p>
+<p>That&rsquo;s the general form of the semi-verifiable reward problem. You can decompose quality into sub-metrics and weight them carefully, but once they collapse into R the signal about <em>which dimensions improved and why</em> gets lost. Preference, the holistic &ldquo;vibe&rdquo; metric, was the last to recover from its J-curve (step 103) and the most volatile throughout. It responds to everything the model does but provides no gradient about what to do differently.</p>
+<p>Two directions seem promising. The first is pairwise comparison within rollout groups — GRPO already computes advantages relative to group members, and extending that with pairwise LLM judgments between rollouts for the same prompt would preserve the comparative signal that scalar scores discard. A judge comparing two +2.0 rollouts directly can say which revision is stronger and on what dimensions.</p>
+<p>The second is judge feedback during the rollout itself. Right now the judge only gives the verdict at the end as a score. A mid-rollout critique — &ldquo;the third bullet is still too vague for this JD&rdquo; — would give the model optimizable signal about <em>what to try next</em>, not just <em>how well</em> it did.</p>
+<h2 id="closing-note">Closing Note<a hidden class="anchor" aria-hidden="true" href="#closing-note">#</a></h2>
+<p>Semi-verifiable RLVR is still very much an open problem, and the community is pushing on it from multiple angles. This project is one attempt at the end-to-end approach. I believe this kind of direct, environment-grounded training is what scales to real-world agentic tasks, because it forces the reward design to confront the problem&rsquo;s messy interconnected dynamics in runtime. You have to let the model feel those tensions during optimization. And I think we&rsquo;ll see more of them as the field moves deeper into semi-verifiable territory.</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on x"
+            href="https://x.com/intent/tweet/?text=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f&amp;hashtags=">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f&amp;title=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f&amp;summary=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f&amp;source=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on reddit"
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f&title=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on whatsapp"
+            href="https://api.whatsapp.com/send?text=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f%20-%20http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on telegram"
+            href="https://telegram.me/share/url?text=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f&amp;url=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share Can We Teach Agents Editorial Taste with RLVR? on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=Can%20We%20Teach%20Agents%20Editorial%20Taste%20with%20RLVR%3f&u=http%3a%2f%2flocalhost%3a1313%2fposts%2fmy-first-post%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="http://localhost:1313/">Flandre S.</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
