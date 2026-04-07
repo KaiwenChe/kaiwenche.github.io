@@ -1,6 +1,6 @@
 baseURL = 'https://kaiwenche.github.io/'
 languageCode = 'en-us'
-title = 'Flandre S.'
+title = 'Kaiwen Che'
 theme = 'PaperMod'
 
 [markup.goldmark.renderer]
@@ -18,8 +18,8 @@ TocOpen = false
 
 [params.profileMode]
 enabled = true
-title = 'Flandre S.'
-subtitle = 'Agentic AI explorer'
+title = 'Kaiwen Che'
+subtitle = 'To the Singularity'
 imageUrl = '/images/avatar.jpg'
 imageWidth = 200
 imageHeight = 200
